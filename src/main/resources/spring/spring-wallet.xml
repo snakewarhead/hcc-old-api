@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+	<bean id="eBTC" class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+		<property name="staticField" value="com.puli.service.wallet.WalletType.BTC" />
+	</bean>
+	<bean id="eETH" class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+		<property name="staticField" value="com.puli.service.wallet.WalletType.ETH" />
+	</bean>
+	<bean id="eHCC" class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+		<property name="staticField" value="com.puli.service.wallet.WalletType.HCC" />
+	</bean>
+
+	<bean id="walletManager" class="com.puli.service.WalletManager">
+		<property name="rpcs">
+			<map>
+				<entry key-ref="eHCC">
+					<bean class="com.puli.service.wallet.impl.WalletRPC_BTCLike">
+						<constructor-arg name="type" value="HCC"/>
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>
